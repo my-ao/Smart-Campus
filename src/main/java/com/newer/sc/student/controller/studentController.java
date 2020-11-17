@@ -1,25 +1,30 @@
-package com.newer.sc.common.student.controller;
+package com.newer.sc.student.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.newer.sc.common.entity.Ccie;
+import com.newer.sc.common.entity.CcieStu;
 import com.newer.sc.common.entity.Check;
 import com.newer.sc.common.entity.Credit;
 import com.newer.sc.common.entity.Ctimetable;
+import com.newer.sc.common.entity.Ele_Stu;
 import com.newer.sc.common.entity.Elective;
 import com.newer.sc.common.entity.Exam;
+import com.newer.sc.common.entity.ExamStu;
 import com.newer.sc.common.entity.Grade;
 import com.newer.sc.common.entity.Student;
 import com.newer.sc.common.entity.Teacher;
-import com.newer.sc.common.student.servic.StudentService;
+import com.newer.sc.student.servic.StudentService;
 
+@CrossOrigin
 @RestController
 @RequestMapping
 public class studentController {
@@ -77,43 +82,67 @@ public class studentController {
 
 //	查询所有等级考试信息
 	@GetMapping("/student/apply/lebel")
-	public List<Ccie> findAllCcie(){
+	public List<Ccie> findAllCcie() {
 		return stu.findAllCcie();
 	}
-	
+
 //	学生报名登记考试
 	@PostMapping("/student/apply/lebel/{cid}/{id}")
-	public void insertCcie(@PathVariable int cid,@PathVariable int id) {
+	public void insertCcie(@PathVariable int cid, @PathVariable int id) {
 		stu.insertCcie(cid, id);
 	}
-	
+
 //	查询所有选修课表
 	@GetMapping("/student/apply/course")
-	public List<Elective> findAllEle(){
-	return	stu.findAllEle();
+	public List<Elective> findAllEle() {
+		return stu.findAllEle();
 	}
-	
+
 //	学生报名选修课
 	@PostMapping("/student/apply/course/{eid}/{id}")
-	public void insertEle(@PathVariable int eid,@PathVariable int id) {
+	public void insertEle(@PathVariable int eid, @PathVariable int id) {
 		stu.insertEle(eid, id);
 	}
-	
+
 //	查寻所有老师
 	@GetMapping("/student/teacher")
-	public List<Teacher> findAllTea(){
-	return	stu.findAllTea();
+	public List<Teacher> findAllTea() {
+		return stu.findAllTea();
 	}
-	
+
 //	学生给老师评分
 	@PostMapping("/student/teacher/{tid}/{score}")
-	public void insertMark(@PathVariable int tid,@PathVariable int score) {
+	public void insertMark(@PathVariable int tid, @PathVariable int score) {
 		stu.insertMark(tid, score);
 	}
-	
+
 //	学生申请补考
-	@PostMapping("/student/exam/{sid}/{eid}/{state}")
-	public void insertExam(@PathVariable int sid,@PathVariable int eid,@PathVariable int state){
-		stu.insertExam(sid, eid, state);
+	@PostMapping("/student/exam/{sid}/{eid}/1")
+	public void insertExam(@PathVariable int sid, @PathVariable int eid) {
+		stu.insertExam(sid, eid);
+	}
+
+	// 学生已申请的补考
+	@GetMapping("/student/exam/{id}")
+	public List<ExamStu> findExamBySid(@PathVariable int id) {
+		return stu.findExamBysid(id);
+	}
+
+//	查询已申请的证书考试
+	@GetMapping("/student/ccie/{id}")
+	public List<CcieStu> findCcieBySid(@PathVariable int id) {
+		return stu.findCcieBySid(id);
+	}
+
+//	查看已申请的选修课
+	@GetMapping("/student/elective/{id}")
+	public List<Ele_Stu> findEleStu(@PathVariable int id) {
+		return stu.findEleStu(id);
+	}
+
+//	学生修改信息
+	@PutMapping("/student")
+	public void updateStu(@RequestBody Student student) {
+		stu.updateStu(student);
 	}
 }

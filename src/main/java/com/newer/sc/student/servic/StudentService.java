@@ -1,4 +1,4 @@
-package com.newer.sc.common.student.servic;
+package com.newer.sc.student.servic;
 
 import java.util.List;
 
@@ -7,16 +7,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.newer.sc.common.entity.Ccie;
+import com.newer.sc.common.entity.CcieStu;
 import com.newer.sc.common.entity.Check;
 import com.newer.sc.common.entity.Class;
 import com.newer.sc.common.entity.Credit;
 import com.newer.sc.common.entity.Ctimetable;
+import com.newer.sc.common.entity.Ele_Stu;
 import com.newer.sc.common.entity.Elective;
 import com.newer.sc.common.entity.Exam;
+import com.newer.sc.common.entity.ExamStu;
 import com.newer.sc.common.entity.Grade;
 import com.newer.sc.common.entity.Student;
 import com.newer.sc.common.entity.Teacher;
-import com.newer.sc.common.student.mapper.studentMapper;
+import com.newer.sc.student.mapper.studentMapper;
 
 @Service
 public class StudentService {
@@ -97,14 +100,35 @@ public class StudentService {
 	public List<Teacher> findAllTea() {
 		return stumapper.findAllTea();
 	}
-	
+
 //	学生给老师评分
-	public void insertMark(int tid,int score) {
+	public void insertMark(int tid, int score) {
 		stumapper.insertMark(tid, score);
 	}
-	
+
 //	学生申请补考
-	public void insertExam(int sid,int eid,int state) {
-		stumapper.insertExam(sid, eid, state);
+	public void insertExam(int sid, int eid) {
+		stumapper.insertExam(sid, eid);
+	}
+
+	// 学生已申请的补考
+	public List<ExamStu> findExamBysid(int id) {
+		return stumapper.findExamBysid(id);
+	}
+
+//	查询已申请的证书
+	public List<CcieStu> findCcieBySid(int id) {
+		return stumapper.findCcieBySid(id);
+	}
+
+//	查看报名的等级考试
+	public List<Ele_Stu> findEleStu(int id) {
+		return stumapper.findEleStu(id);
+	}
+
+//	学生修改信息
+	public void updateStu(Student student) {
+		stumapper.updateStu(student);
+
 	}
 }
